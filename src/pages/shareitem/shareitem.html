@@ -1,0 +1,49 @@
+<!--
+  Generated template for the ShareitemPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title> {{listName}} </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="trips">
+  <ion-card  *ngFor="let item of items | async">
+    <ion-item>
+      <ion-avatar item-start (click)="viewPhoto(item.imgURL)">
+        <img *ngIf="item.imgURL" [src]=item.imgURL>
+        <ion-icon color="primary" *ngIf="!item.imgURL" name="document"></ion-icon>
+      </ion-avatar>
+      <h2>{{item.name}}</h2>
+      <p>{{item.adress}}</p>
+    </ion-item>
+    <ion-card-content>
+      <p> {{item.desc}}</p>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small (click)="updateModal(item.id, item)">
+          <ion-icon name="create"></ion-icon>
+          <div>update</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button color="danger" ion-button icon-start clear small (click)="delete(item.id)">
+          <ion-icon name="trash"></ion-icon>
+          <div>delete</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <p *ngIf="item.complete"> Completed </p>
+        <p *ngIf="!item.complete"> Not completed </p>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-fab right bottom>
+    <button ion-fab (click)="addItem()">add</button>
+  </ion-fab>
+</ion-content>

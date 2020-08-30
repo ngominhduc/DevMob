@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title> Shared List </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list class="list">
+    <div *ngFor="let list of data | async">
+      <ion-item-sliding *ngIf="list.email == currentuseremail">
+        <ion-item (click)="listSelected(list.id)">
+          <ion-icon item-start name="list"></ion-icon>
+          <p> {{ list.name }} created by me </p>
+        </ion-item>
+
+        <ion-item-options side="left">
+          <button ion-button color="danger" (click)="deleteList(list.id)">
+            Delete
+          </button>
+          <button ion-button color="secondary" (click)="updateList(list.id)">
+            Update
+          </button>
+          <button ion-button color="secondary" (click)="sharelist(list.id)" *ngIf="list.email == currentuseremail">
+            Share
+          </button>
+          <button ion-button color="secondary" (click)="deletesharelist(list.id)">
+            Delete share
+          </button>
+          <button ion-button color="secondary" (click)="encodedText(list.id)">
+            Share by QRCode
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+
+
+      <div *ngFor="let key of objectKeys(list.shareto)">
+        <div>
+          <ion-item-sliding *ngIf=" list.shareto[key].shareto == currentuseremail">
+            <ion-item (click)="listSelected(list.id)">
+              <ion-icon item-start name="list"></ion-icon>
+              <p>{{ list.name }} is shared</p>
+            </ion-item>
+            <ion-item-options side="left">
+              <button ion-button color="danger" (click)="deleteList(list.id)">
+                Delete
+              </button>
+              <button ion-button color="secondary" (click)="updateList(list.id)">
+                Update
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+      </div>
+      <div>
+        <ion-item-sliding *ngIf="list.id == scannedData">
+          <ion-item (click)="listSelected(list.id)">
+            <ion-icon item-start name="document"></ion-icon>
+            <p>{{ list.name }} is shared by QRCODE </p>
+            <ion-icon item-end name="share"></ion-icon>
+          </ion-item>
+          <ion-item-options side="left">
+            <button ion-button color="danger" (click)="deleteList(list.id)">
+              Delete
+            </button>
+            <button ion-button color="secondary" (click)="updateList(list.id)">
+              Update
+            </button>
+            <button ion-button color="secondary" (click)="sharelist(list.id)" *ngIf="list.email == currentuseremail">
+              Share list
+            </button>
+            <button ion-button color="secondary" (click)="deletesharelist(list.id)" *ngIf="list.email == currentuseremail">
+              Delete shared list
+            </button>
+            <button ion-button color="secondary" (click)="encodedText(list.id)" *ngIf="list.email == currentuseremail">
+              Share by QRCode
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+    </div>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab (click)="addList()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-fab left bottom>
+    <button ion-fab (click)="scanCode()">
+      scan
+    </button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,38 @@
+<ion-menu [content]="content">
+    <ion-header>
+    <ion-toolbar class="user-profile">
+      <ion-grid>
+        <ion-row *ngIf="(user | async) || {} as user">
+          <ion-col col-4>
+              <div class="user-avatar">
+                <img [src]=user.photoURL>
+              </div>
+          </ion-col>
+          <ion-col padding-top col-8>
+            <p class="user-text"> {{user.displayName}} </p>
+            <p class="user-text"> {{user.email}} </p>
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding class="other-data">
+          <ion-col no-padding class="column">
+            <button ion-button icon-left small full color="primary" menuClose (click)="logout()">
+              <ion-icon name="log-out"></ion-icon>
+              Log Out
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content color="primary" class="user-profile-content">
+    <ion-list>
+      <button ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon item-start [name]="p.icon" [color]="isActive(p)"></ion-icon>
+        {{ p.title }}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- main navigation -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

@@ -1,0 +1,61 @@
+<!--
+  Generated template for the ShowlistPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+      <ion-toolbar color="primary">
+        <ion-searchbar></ion-searchbar>
+      </ion-toolbar>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div padding>
+    <ion-segment [(ngModel)]="pet">
+      <ion-segment-button value="kittens">
+        ALL
+      </ion-segment-button>
+      <ion-segment-button value="shared">
+        Shared
+      </ion-segment-button>
+      <ion-segment-button value="sharedWith">
+        Shared with me
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <ion-list class="list">
+    <div *ngFor="let list of dataList | async">
+      <ion-item-sliding>
+        <ion-item (click)="listSelected(list.id, list.name)">
+          <ion-icon item-start name="list"></ion-icon>
+          <p> {{ list.name }} </p>
+          <ion-icon item-end name="more"></ion-icon>
+        </ion-item>
+        <ion-item-options side="left">
+          <button ion-button color="danger" (click)="deleteList(list.id)">
+            Delete
+          </button>
+          <button ion-button color="secondary" (click)="updateList(list.id)">
+            Update
+          </button>
+        </ion-item-options>
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="listSelected(list.id)">
+            Share
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </div>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab (click)="addList()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>
